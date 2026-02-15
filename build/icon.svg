@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+    <linearGradient id="bulbGlow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="bulbClip">
+      <path d="M512 160 C370 160 260 280 260 410 C260 500 300 570 360 620 C390 646 410 690 410 730 L410 780 C410 810 434 834 464 834 L560 834 C590 834 614 810 614 780 L614 730 C614 690 634 646 664 620 C724 570 764 500 764 410 C764 280 654 160 512 160Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background rounded rectangle -->
+  <rect width="1024" height="1024" rx="220" ry="220" fill="url(#bg)"/>
+
+  <!-- Subtle inner glow -->
+  <rect width="1024" height="1024" rx="220" ry="220" fill="url(#bulbGlow)"/>
+
+  <!-- Lightbulb shape -->
+  <path d="M512 160 C370 160 260 280 260 410 C260 500 300 570 360 620 C390 646 410 690 410 730 L410 780 C410 810 434 834 464 834 L560 834 C590 834 614 810 614 780 L614 730 C614 690 634 646 664 620 C724 570 764 500 764 410 C764 280 654 160 512 160Z"
+        fill="white" fill-opacity="0.95"/>
+
+  <!-- Base lines (screw threads) -->
+  <rect x="430" y="844" width="164" height="16" rx="8" fill="white" fill-opacity="0.7"/>
+  <rect x="445" y="872" width="134" height="16" rx="8" fill="white" fill-opacity="0.5"/>
+  <rect x="465" y="900" width="94" height="14" rx="7" fill="white" fill-opacity="0.35"/>
+
+  <!-- Tuning slider bars inside bulb (clipped) -->
+  <g clip-path="url(#bulbClip)">
+    <!-- Slider track backgrounds -->
+    <rect x="340" y="350" width="344" height="10" rx="5" fill="#F97316" fill-opacity="0.2"/>
+    <rect x="340" y="430" width="344" height="10" rx="5" fill="#F97316" fill-opacity="0.2"/>
+    <rect x="340" y="510" width="344" height="10" rx="5" fill="#F97316" fill-opacity="0.2"/>
+
+    <!-- Slider fills (different levels = "tuning") -->
+    <rect x="340" y="350" width="230" height="10" rx="5" fill="#F97316" fill-opacity="0.7"/>
+    <rect x="340" y="430" width="160" height="10" rx="5" fill="#F97316" fill-opacity="0.7"/>
+    <rect x="340" y="510" width="290" height="10" rx="5" fill="#F97316" fill-opacity="0.7"/>
+
+    <!-- Slider knobs -->
+    <circle cx="570" cy="355" r="18" fill="#EA580C"/>
+    <circle cx="500" cy="435" r="18" fill="#EA580C"/>
+    <circle cx="630" cy="515" r="18" fill="#EA580C"/>
+  </g>
+</svg>
