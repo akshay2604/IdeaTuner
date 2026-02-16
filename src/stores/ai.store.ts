@@ -6,6 +6,7 @@ import { createStreamParser } from '@/api/stream-parser'
 import { getTunerPrompt } from '@/api/prompts/tuner'
 import { getBrainstormPrompt } from '@/api/prompts/brainstorm'
 import { useDecisionsStore } from './decisions.store'
+import { useSettingsStore } from './settings.store'
 
 // Module-level abort controller for stream cancellation
 let activeAbortController: AbortController | null = null
@@ -150,7 +151,8 @@ export const useAIStore = create<AIState>((set, get) => ({
       })
 
       // Create AI client and stream
-      const client = await getAIClient()
+      const { rawApiKey } = useSettingsStore.getState()
+      const client = await getAIClient(rawApiKey)
       activeAbortController = new AbortController()
 
       const stream = client.messages.stream(

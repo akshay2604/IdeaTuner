@@ -5,6 +5,7 @@ import { validateApiKey } from '@/api/ai-client'
 interface SettingsState {
   apiKeySet: boolean
   apiKeyDisplay: string | null
+  rawApiKey: string | null
   darkMode: boolean
   isLoading: boolean
 
@@ -18,15 +19,17 @@ interface SettingsState {
 export const useSettingsStore = create<SettingsState>((set, get) => ({
   apiKeySet: false,
   apiKeyDisplay: null,
+  rawApiKey: null,
   darkMode: false,
   isLoading: false,
 
   checkApiKey: async () => {
     try {
       const display = await commands.getApiKey()
-      set({ apiKeySet: !!display, apiKeyDisplay: display })
+      const raw = display ? await commands.getApiKeyRaw() : null
+      set({ apiKeySet: !!display, apiKeyDisplay: display, rawApiKey: raw })
     } catch {
-      set({ apiKeySet: false, apiKeyDisplay: null })
+      set({ apiKeySet: false, apiKeyDisplay: null, rawApiKey: null })
     }
   },
 
@@ -37,7 +40,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
       if (valid) {
         await commands.setApiKey(key)
         const display = await commands.getApiKey()
-        set({ apiKeySet: true, apiKeyDisplay: display, isLoading: false })
+        set({ apiKeySet: true, apiKeyDisplay: display, rawApiKey: key, isLoading: false })
         return true
       }
       set({ isLoading: false })
@@ -50,7 +53,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
 
   removeApiKey: async () => {
     await commands.removeApiKey()
-    set({ apiKeySet: false, apiKeyDisplay: null })
+    set({ apiKeySet: false, apiKeyDisplay: null, rawApiKey: null })
   },
 
   toggleDarkMode: () => {

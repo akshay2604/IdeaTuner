@@ -20,7 +20,7 @@ Tauri v2 app with Rust backend + React frontend:
 
 ```
 Rust Backend (src-tauri/)  ←→  invoke()  ←→  React Frontend (src/)
-  DB, keychain, export           Tauri IPC       Components, stores, AI client
+  DB, settings, export           Tauri IPC       Components, stores, AI client
 ```
 
 **Shared code** lives in `src/shared/` (types, constants) and is imported via the `@shared` path alias. The `@/` alias points to `src/`.
@@ -30,7 +30,7 @@ Rust Backend (src-tauri/)  ←→  invoke()  ←→  React Frontend (src/)
 Frontend calls Rust backend via `invoke()` from `@tauri-apps/api/core`. All invoke wrappers are in `src/api/commands.ts`. There are 28 commands total:
 - 6 decision commands, 3 each for options/evidence/assumptions/stakeholders
 - 6 AI conversation commands (CRUD + threads)
-- 4 settings commands (keyring-based API key management)
+- 4 settings commands (SQLite-based API key management)
 - 1 export command
 
 ### Database
@@ -63,7 +63,7 @@ AI responses embed structured data via custom tags parsed during streaming:
 
 ### API Key Storage
 
-Uses the `keyring` crate (system keychain) on the Rust side. The `get_api_key` command returns a masked version for display; `get_api_key_raw` returns the full key for the frontend AI client.
+Stored in the `app_settings` SQLite table (previously used `keyring` crate, but macOS keychain silently fails for unsigned Tauri apps). The `get_api_key` command returns a masked version for display; `get_api_key_raw` returns the full key. The frontend settings store caches the raw key in memory to avoid repeated DB reads.
 
 ### Idea Phases
 

@@ -2,8 +2,8 @@ import Anthropic from '@anthropic-ai/sdk'
 import { fetch } from '@tauri-apps/plugin-http'
 import { getApiKeyRaw } from './commands'
 
-export async function getAIClient(): Promise<Anthropic> {
-  const apiKey = await getApiKeyRaw()
+export async function getAIClient(cachedKey?: string | null): Promise<Anthropic> {
+  const apiKey = cachedKey || (await getApiKeyRaw())
   if (!apiKey) {
     throw new Error('API key not configured. Please set your Anthropic API key in Settings.')
   }
