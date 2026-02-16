@@ -46,7 +46,7 @@ echo "Built: $DMG"
 # Commit version bump and tag
 git add package.json pnpm-lock.yaml src-tauri/tauri.conf.json
 git commit -m "release: v$VERSION"
-git tag "v$VERSION"
+git tag -a "v$VERSION" -m "Release v$VERSION"
 git push origin main --tags
 
 # Create GitHub release
